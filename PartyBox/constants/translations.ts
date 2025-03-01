@@ -1,0 +1,33 @@
+// constants/translations.ts
+export const translations = {
+  es: {
+    welcome: '¡Bienvenido a PartyBox!',
+    emailPlaceholder: 'Correo electrónico',
+    loginButton: 'Ingresar',
+    organizeParty: '¡Organiza tu fiesta!',
+    preferencesTitle: 'Preferencias',
+    themeLabel: 'Selecciona tu tema:',
+    languageLabel: 'Selecciona tu idioma:',
+    changeToDark: 'Cambiar a Oscuro',
+    changeToLight: 'Cambiar a Claro',
+    changeToEnglish: 'Cambiar a Inglés',
+    changeToSpanish: 'Cambiar a Español',
+    goBack: 'Regresar',
+    logout: 'Cerrar Sesión',
+  },
+  en: {
+    welcome: 'Welcome to PartyBox!',
+    emailPlaceholder: 'Email',
+    loginButton: 'Login',
+    organizeParty: 'Organize your party!',
+    preferencesTitle: 'Preferences',
+    themeLabel: 'Select your theme:',
+    languageLabel: 'Select your language:',
+    changeToDark: 'Change to Dark',
+    changeToLight: 'Change to Light',
+    changeToEnglish: 'Change to Spanish',
+    changeToSpanish: 'Change to Spanish',
+    goBack: 'Go Back',
+    logout: 'Logout',
+  },
+};
