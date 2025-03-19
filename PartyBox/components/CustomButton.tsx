@@ -1,36 +1,58 @@
-// components/CustomButton.tsx
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { Colors } from '../constants/Colors';
+import { Text, StyleSheet } from 'react-native';
+import { Colors } from '@/constants/Colors';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+} from 'react-native-reanimated';
+import { Pressable } from 'react-native';
 
 interface CustomButtonProps {
-  title: string; // Texto del botón
-  onPress: () => void; // Función que se ejecuta al presionar el botón
-  style?: object; // Estilos personalizados para el contenedor del botón
-  textStyle?: object; // Estilos personalizados para el texto del botón
+  title: string;
+  onPress: () => void;
+  style?: object;
+  textStyle?: object;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({ title, onPress, style, textStyle }) => {
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+  const handlePressIn = () => {
+    scale.value = withSpring(0.95);
+  };
+
+  const handlePressOut = () => {
+    scale.value = withSpring(1);
+  };
+
   return (
-    <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
-      <Text style={[styles.buttonText, textStyle]}>{title}</Text>
-    </TouchableOpacity>
+    <Pressable onPress={onPress} onPressIn={handlePressIn} onPressOut={handlePressOut}>
+      <Animated.View style={[styles.button, style, animatedStyle]}>
+        <Text style={[styles.buttonText, textStyle]}>{title}</Text>
+      </Animated.View>
+    </Pressable>
   );
 };
 
-// Estilos base del botón
 const styles = StyleSheet.create({
   button: {
     width: '100%',
     padding: 16,
-    borderRadius: 25, // Bordes redondeados
+    borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000', // Sombra
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    elevation: 5, // Sombra en Android
+    elevation: 5,
     marginBottom: 10,
   },
   buttonText: {

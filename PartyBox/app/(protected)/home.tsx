@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
-import { useAuth } from '../../contexts/AuthContext';
-import { Colors } from '../../constants/Colors';
-import { useLanguage } from '../../contexts/LanguageContext';
-import { translations } from '../../constants/translations';
-import { useTheme } from '../../contexts/ThemeContext';
-import CustomButton from '../../components/CustomButton'; // Importa el componente reutilizable
+import { useAuth } from '@/contexts/AuthContext';
+import { Colors } from '@/constants/Colors';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/constants/translations';
+import { useTheme } from '@/contexts/ThemeContext';
+import CustomButton from '@/components/CustomButton';
 
-const HomeScreen: React.FC = () => {
+const HomeScreen = () => {
   const { logout } = useAuth();
   const { language } = useLanguage();
   const { theme } = useTheme();
@@ -30,6 +30,22 @@ const HomeScreen: React.FC = () => {
     <View style={[styles.container, containerStyle]}>
       {/* Título de la pantalla */}
       <Text style={[styles.title, titleStyle]}>{t.organizeParty}</Text>
+
+      {/* Botón para crear una fiesta */}
+      <CustomButton
+        title={t.createParty} // Usa el texto traducido
+        onPress={() => router.push('/(protected)/CrearFiesta')}
+        style={[styles.button, buttonStyle]}
+        textStyle={[styles.buttonText, buttonTextStyle]}
+      />
+
+      {/* Botón para ver fiestas planeadas */}
+      <CustomButton
+        title={t.plannedParties} // Usa el texto traducido
+        onPress={() => router.push('/(protected)/FiestasPlaneadas')}
+        style={[styles.button, buttonStyle]}
+        textStyle={[styles.buttonText, buttonTextStyle]}
+      />
 
       {/* Botón de Preferencias */}
       <CustomButton
