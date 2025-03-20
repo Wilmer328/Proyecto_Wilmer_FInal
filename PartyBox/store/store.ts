@@ -1,13 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './slices/userSlice'; // Importa el slice de usuario/fiestas
+import userReducer from './slices/userSlice';
 
-// Configuración del store
 export const store = configureStore({
   reducer: {
-    user: userReducer, // Agrega el reducer de usuario/fiestas al store
+    user: userReducer, // Combina los reducers
   },
+  devTools: true, // Habilita Redux DevTools
 });
 
-// Exporta los tipos necesarios para TypeScript
-export type RootState = ReturnType<typeof store.getState>; // Tipo del estado global
-export type AppDispatch = typeof store.dispatch; // Tipo para dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

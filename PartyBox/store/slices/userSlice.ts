@@ -24,14 +24,17 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     addParty: (state, action: PayloadAction<Party>) => {
+      console.log('Agregando fiesta:', action.payload); // Mensaje en consola
       state.parties.push(action.payload);
       saveParties(state.parties);
     },
     deleteParty: (state, action: PayloadAction<string>) => {
+      console.log('Borrando fiesta con ID:', action.payload); // Mensaje en consola
       state.parties = state.parties.filter((party) => party.id !== action.payload);
       saveParties(state.parties);
     },
     editParty: (state, action: PayloadAction<Party>) => {
+      console.log('Editando fiesta:', action.payload); // Mensaje en consola
       const index = state.parties.findIndex((party) => party.id === action.payload.id);
       if (index !== -1) {
         state.parties[index] = action.payload;
@@ -39,6 +42,7 @@ const userSlice = createSlice({
       }
     },
     setParties: (state, action: PayloadAction<Party[]>) => {
+      console.log('Cargando fiestas desde AsyncStorage:', action.payload); // Mensaje en consola
       state.parties = action.payload;
     },
   },
@@ -48,7 +52,9 @@ export const { addParty, deleteParty, editParty, setParties } = userSlice.action
 
 export const initializeParties = () => async (dispatch: any) => {
   const parties = await loadParties();
+  console.log('Fiestas cargadas desde AsyncStorage:', parties); // Mensaje en consola
   dispatch(setParties(parties));
 };
 
 export default userSlice.reducer;
+
