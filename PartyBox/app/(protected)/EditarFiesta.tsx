@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { editParty } from '@/store/slices/userSlice';
@@ -16,7 +16,7 @@ const EditarFiesta = () => {
   const { language } = useLanguage();
   const { theme } = useTheme();
   const t = translations[language];
-  const { id } = useLocalSearchParams(); // Obtén el ID de la fiesta desde la URL
+  const { id } = useLocalSearchParams();
   const parties = useSelector((state: RootState) => state.user.parties);
 
   const party = parties.find((p) => p.id === id);
@@ -35,7 +35,7 @@ const EditarFiesta = () => {
     }
 
     const updatedParty = {
-      id: party!.id, // Usamos el ID de la fiesta existente
+      id: party!.id,
       type,
       guests: parseInt(guests, 10),
       food,
@@ -120,8 +120,19 @@ const EditarFiesta = () => {
         keyboardType="numeric"
       />
 
-      <CustomButton title={t.saveChanges} onPress={handleSave} />
-      <CustomButton title={t.goBack} onPress={() => router.replace('/(protected)/FiestasPlaneadas')} />
+      <CustomButton 
+        title={t.saveChanges} 
+        onPress={handleSave}
+        theme={theme}
+        variant="primary"
+      />
+      
+      <CustomButton 
+        title={t.goBack} 
+        onPress={() => router.replace('/(protected)/FiestasPlaneadas')}
+        theme={theme}
+        variant="secondary"
+      />
     </View>
   );
 };

@@ -7,7 +7,7 @@ import { Colors } from '../../constants/Colors';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { translations } from '../../constants/translations';
 import { useTheme } from '../../contexts/ThemeContext';
-import CustomButton from '../../components/CustomButton'; // Importa el componente
+import CustomButton from '../../components/CustomButton'; 
 
 const LoginScreen: React.FC = () => {
   const [email, setEmail] = useState('');

@@ -7,15 +7,28 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import { Pressable } from 'react-native';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface CustomButtonProps {
   title: string;
   onPress: () => void;
   style?: object;
   textStyle?: object;
+  theme?: 'light' | 'dark';
+  variant?: 'primary' | 'secondary' | 'accent';
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({ title, onPress, style, textStyle }) => {
+const CustomButton: React.FC<CustomButtonProps> = ({ 
+  title, 
+  onPress, 
+  style, 
+  textStyle,
+  theme: propTheme,
+  variant = 'primary'
+}) => {
+  const { theme: contextTheme } = useTheme();
+  const currentTheme = propTheme || contextTheme;
+  
   const scale = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -32,10 +45,49 @@ const CustomButton: React.FC<CustomButtonProps> = ({ title, onPress, style, text
     scale.value = withSpring(1);
   };
 
+  const getThemeStyles = () => {
+    if (currentTheme === 'dark') {
+      return {
+        button: { backgroundColor: Colors.accent },
+        text: { color: Colors.white }
+      };
+    }
+
+    switch (variant) {
+      case 'primary':
+        return {
+          button: { backgroundColor: Colors.primary },
+          text: { color: Colors.white }
+        };
+      case 'secondary':
+        return {
+          button: { backgroundColor: Colors.secondary },
+          text: { color: Colors.text }
+        };
+      case 'accent':
+        return {
+          button: { backgroundColor: Colors.accent },
+          text: { color: Colors.white }
+        };
+      default:
+        return {
+          button: { backgroundColor: Colors.primary },
+          text: { color: Colors.white }
+        };
+    }
+  };
+
+  const themeStyles = getThemeStyles();
+
   return (
     <Pressable onPress={onPress} onPressIn={handlePressIn} onPressOut={handlePressOut}>
-      <Animated.View style={[styles.button, style, animatedStyle]}>
-        <Text style={[styles.buttonText, textStyle]}>{title}</Text>
+      <Animated.View style={[
+        styles.button, 
+        themeStyles.button, 
+        style, 
+        animatedStyle
+      ]}>
+        <Text style={[styles.buttonText, themeStyles.text, textStyle]}>{title}</Text>
       </Animated.View>
     </Pressable>
   );

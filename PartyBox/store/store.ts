@@ -3,9 +3,9 @@ import userReducer from './slices/userSlice';
 
 export const store = configureStore({
   reducer: {
-    user: userReducer, // Combina los reducers
+    user: userReducer, 
   },
-  devTools: true, // Habilita Redux DevTools
+  devTools: true, 
 });
 
 export type RootState = ReturnType<typeof store.getState>;
