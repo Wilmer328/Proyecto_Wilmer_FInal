@@ -15,6 +15,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { translations } from '@/constants/translations';
 import { Picker } from '@react-native-picker/picker';
+import { FiestaService } from '@/config/apiEjecutador';
 
 const CrearFiesta = () => {
   const dispatch = useDispatch();
@@ -45,10 +46,6 @@ const CrearFiesta = () => {
   }, []);
 
   const handleSave = () => {
-    if (!type || !guests || !food || !decoration || !date || !time) {
-      Alert.alert(t.error, t.completeAllFields);
-      return;
-    }
 
     const newParty = {
       id: Math.random().toString(),
@@ -57,10 +54,21 @@ const CrearFiesta = () => {
       food,
       decoration,
       date,
-      time,
     };
 
-    dispatch(addParty(newParty));
+    const nombre = newParty.type;
+    const invitados = newParty.guests;
+    const comida = newParty.food;
+    const decoracion = newParty.decoration;
+    const fecha = newParty.date;
+    
+    FiestaService(nombre, invitados, comida, decoracion, fecha);
+
+    if (!type || !guests || !food || !decoration || !date || !time) {
+      Alert.alert(t.error, t.completeAllFields);
+      return;
+    }
+
     router.back();
   };
 
@@ -124,7 +132,7 @@ const CrearFiesta = () => {
         keyboardType="numeric"
       />
 
-      <TextInput
+      {/* <TextInput
         style={[styles.input, inputStyle]}
         placeholder={t.time}
         value={time}
@@ -134,7 +142,7 @@ const CrearFiesta = () => {
           }
         }}
         keyboardType="numeric"
-      />
+      /> */}
 
       <CustomButton
         title={t.saveParty}
